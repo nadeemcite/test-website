@@ -7,7 +7,7 @@ const delay = (time) => {
 };
 
 // const browser = await puppeteer.launch( { args: ['--no-sandbox'] } );
-const run = async (url, selector, timeDelay, attributePath) => {
+const run = async (url, timeDelay) => {
   const browser = await chromium.puppeteer.launch({
     args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
     defaultViewport: chromium.defaultViewport,
@@ -15,33 +15,18 @@ const run = async (url, selector, timeDelay, attributePath) => {
     headless: true,
     ignoreHTTPSErrors: true,
   });
+  const context = await browser.createIncognitoBrowserContext();
   const page = await browser.newPage();
   await page.goto(url);
   await delay(timeDelay);
-  const imageurl = await page.evaluate(
-    ({ selector, attributePath }) => {
-      const item = document.querySelector(selector);
-      if (attributePath) {
-        return eval(`item.${attributePath}`);
-      } else {
-        return item.innerHTML;
-      }
-    },
-    {
-      selector,
-      attributePath,
-    }
-  );
-  browser.close();
-  return {
-    imageurl,
-  };
+  const image = await page.screenshot();
+  context.close();
+  return image;
 };
 
 export default function handler(req, res) {
-  const { url, selector, timeDelay, attributePath } = req.body;
-  const resp = await run(url, selector, timeDelay, attributePath);
-  res.status(200).json({
-    body: resp,
-  });
+    getImage(req.body.url,req.body.timeDelay ).then(image => {
+        res.setHeader('Content-Type', 'image/png');
+        res.send(image);
+      })
 }
