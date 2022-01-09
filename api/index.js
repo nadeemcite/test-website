@@ -7,7 +7,7 @@ const delay = (time) => {
 };
 
 // const browser = await puppeteer.launch( { args: ['--no-sandbox'] } );
-const run = async (url, timeDelay) => {
+const getImage = async (url, timeDelay) => {
   const browser = await chromium.puppeteer.launch({
     args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
     defaultViewport: chromium.defaultViewport,
