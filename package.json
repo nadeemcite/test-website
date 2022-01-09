@@ -1,0 +1,24 @@
+{
+  "name": "test-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nadeemcite/test-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nadeemcite/test-website/issues"
+  },
+  "homepage": "https://github.com/nadeemcite/test-website#readme",
+  "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
+    "puppeteer": "^13.0.1"
+  }
+}
